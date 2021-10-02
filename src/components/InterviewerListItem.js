@@ -12,6 +12,7 @@ export default function InterviewerListItem(props) {
         className="interviewers__item-image"
         src={props.avatar}
         alt={props.name}
+        // key={props.id}
       />
       {props.selected && props.name}
     </li>
