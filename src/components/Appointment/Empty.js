@@ -1,7 +1,5 @@
 import React from "react";
 
-import "components/Appointment/style.scss";
-
 export default function Empty(props) {
 
   return (
