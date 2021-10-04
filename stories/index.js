@@ -17,6 +17,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 
 storiesOf("Button", module)
@@ -167,3 +168,44 @@ storiesOf("Button", module)
         onClose={action("onClose")}
       />
     ))    
+    .add("Edit", () => (
+      <Form 
+        name='Sanghwan'
+        interviewers={interviewers}
+        interviewer={1}
+        setInterviewer={action("setInterviewer")}
+        onSave={action("onSave")}
+        onCancel={action("onCancel")}
+      />
+    ))   
+    .add("Create", () => (
+      <Form 
+        interviewers={interviewers}
+        setInterviewer={action("setInterviewer")}
+        onSave={action("onSave")}
+        onCancel={action("onCancel")}
+      />
+    ))  
+    // .add("Edit", () => (
+    //   <Form 
+    //     // message="Could not delete appointment"
+    //     // onClose={action("onClose")}
+    //     name:String
+    //     interviewers={interviewers}
+    //     interviewer='1'
+    //     onSave={action("onSave")}
+    //     onCancel={action("onCancel")}
+    //   />
+    // ))     
+    // As part of our Edit story, the Form component should take the following props:
+
+    // name:String
+    // interviewers:Array
+    // interviewer:Number
+    // onSave:Function
+    // onCancel:Function
+    // As part of our Create story, the Form component should take the following props:
+    
+    // interviewers:Array
+    // onSave:Function
+    // onCancel:Function    
