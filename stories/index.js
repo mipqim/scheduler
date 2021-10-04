@@ -172,18 +172,18 @@ storiesOf("Button", module)
       <Form 
         name='Sanghwan'
         interviewers={interviewers}
-        interviewer={1}
-        setInterviewer={action("setInterviewer")}
+        interviewer={3}
+        // setInterviewer={action("setInterviewer")}
         onSave={action("onSave")}
-        onCancel={action("onCancel")}
+        // onCancel={action("onCancel")}
       />
     ))   
     .add("Create", () => (
       <Form 
         interviewers={interviewers}
-        setInterviewer={action("setInterviewer")}
+        // setInterviewer={action("setInterviewer")}
         onSave={action("onSave")}
-        onCancel={action("onCancel")}
+        // onCancel={action("onCancel")}
       />
     ))  
     // .add("Edit", () => (
