@@ -89,14 +89,26 @@ const appointments = [
 
 export default function Application(props) {
 
-  const [days, setDays] = useState([]);
-  const [day, setDay] = useState('Monday');
+  // const [days, setDays] = useState([]);
+  // const [day, setDay] = useState('Monday');
+
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });  
+
+  const setDay = day => setState({ ...state, day });
+  const setDays = (days) => {
+    // console.log('---------------> custom setDays');
+    setState(prev => ({ ...prev, days }));
+}
 
   useEffect(() =>{
     const daysUurl = `http://localhost:8001/api/days`;
     axios.get(daysUurl)
       .then(response => { 
-        console.log(response.data);
+        // console.log(response.data);
         setDays([...response.data]);
       })
       .catch(error => {
@@ -116,8 +128,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
 
           <DayList
-            days={days}
-            day={day}
+            days={state.days}
+            day={state.day}
             setDay={setDay}
           />
           
@@ -140,41 +152,3 @@ export default function Application(props) {
     </main>
   );
 }
-
-
-
-/*
-        <Appointment
-          id={1}
-          time="12pm"
-          interview={{ student: "Lydia Miller-Jones", interviewer:interviewers[0] }}
-        />
-        <Appointment id="last" time="1pm" />
-//////////////////////////////////////////////
-
-      <Header
-        time = {props.time}
-      />
-      {props.interview ?  <Show student = {props.interview.student} interviewer = {props.interview.interviewer}/>: <Empty/>}
-
-//////
-
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  }
-
-
-*/
