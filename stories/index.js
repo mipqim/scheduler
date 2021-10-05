@@ -99,7 +99,7 @@ storiesOf("Button", module)
         id={interviewer.id}
         name={interviewer.name}
         avatar={interviewer.avatar}
-        selected
+        selected={true}
       />
     ))
     .add("Clickable", () => (
@@ -128,14 +128,15 @@ storiesOf("Button", module)
     .add("Initial", () => (
       <InterviewerList
         interviewers={interviewers}
-        setInterviewer={action("setInterviewer")}
+        onChange={action("setInterviewer")}
       />
     ))
     .add("Preselected", () => (
       <InterviewerList
         interviewers={interviewers}
         interviewer={3}
-        setInterviewer={action("setInterviewer")}
+        // setInterviewer={action("setInterviewer")}
+        onChange={action("setInterviewer")}
       />
     ));      
 
@@ -192,39 +193,12 @@ storiesOf("Button", module)
         name='Sanghwan'
         interviewers={interviewers}
         interviewer={3}
-        // setInterviewer={action("setInterviewer")}
         onSave={action("onSave")}
-        // onCancel={action("onCancel")}
       />
     ))   
     .add("Create", () => (
       <Form 
         interviewers={interviewers}
-        // setInterviewer={action("setInterviewer")}
         onSave={action("onSave")}
-        // onCancel={action("onCancel")}
       />
     ))  
-    // .add("Edit", () => (
-    //   <Form 
-    //     // message="Could not delete appointment"
-    //     // onClose={action("onClose")}
-    //     name:String
-    //     interviewers={interviewers}
-    //     interviewer='1'
-    //     onSave={action("onSave")}
-    //     onCancel={action("onCancel")}
-    //   />
-    // ))     
-    // As part of our Edit story, the Form component should take the following props:
-
-    // name:String
-    // interviewers:Array
-    // interviewer:Number
-    // onSave:Function
-    // onCancel:Function
-    // As part of our Create story, the Form component should take the following props:
-    
-    // interviewers:Array
-    // onSave:Function
-    // onCancel:Function    

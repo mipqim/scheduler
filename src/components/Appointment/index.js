@@ -12,9 +12,9 @@ export default function Appointment(props) {
   return (
     <article className="appointment">
       <Header
-        time = {props.time}
+        time = {props.time}          
       />
-      {props.interview ?  <Show student = {props.interview.student} interviewer = {props.interview.interviewer}/>: <Empty/>}
+      {props.interview ?  <Show student = {props.interview.student} interviewer = {props.interview.interviewer} onEdit={()=>{console.log('onEdit from Appointment/index.js')}} onDelete={()=>{console.log('onDelete from Appointment.js')}}/>: <Empty onAdd={()=>{console.log('onAdd from Appointment/index.js')}}/>}
     </article>
   );
 }
