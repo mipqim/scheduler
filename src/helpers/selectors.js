@@ -19,3 +19,19 @@ export function getAppointmentsForDay(state, day) {
 function selectObjectArray(objArray, srcProperty, filterStr) {
   return objArray.filter(obj => obj[srcProperty] === filterStr);
 }
+
+export function getInterview(state, interview) {
+  if(!interview || !state.interviewers[interview.interviewer]){
+    return null;
+  }
+
+  const interviewer = state.interviewers[interview.interviewer];
+  return {
+    ...interview,
+    interviewer : {
+      id : interview.interviewer,
+      name : interviewer.name,
+      avatar : interviewer.avatar
+    }
+   };    
+};
