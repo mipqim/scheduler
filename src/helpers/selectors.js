@@ -33,5 +33,19 @@ export function getInterview(state, interview) {
       name : interviewer.name,
       avatar : interviewer.avatar
     }
-   };    
+   };       
+};
+
+
+export const getInterviewersForDay = (state, dayStr) => {
+  let resultArray = [];
+  if(state && dayStr) {
+    const dayObj = state.days.find(dayInMap => dayInMap.name === dayStr);
+    if(dayObj && dayObj.interviewers){
+      for(const interviewerId of dayObj.interviewers){
+        resultArray.push(state.interviewers[interviewerId]);
+      }
+    }
+  }
+  return resultArray;
 };

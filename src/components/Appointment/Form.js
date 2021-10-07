@@ -11,10 +11,11 @@ export default function Form(props) {
   const reset = () => {
     setName('');
     setInterviewer(null);
+    props.onCancel();
   }
 
   const save = () => {
-    console.log('onSave', [name, interviewer]);
+    props.onSave(name, interviewer);
   }
 
   return (

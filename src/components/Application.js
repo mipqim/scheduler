@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 import "components/Application.scss";
 
@@ -88,6 +88,7 @@ const interviewers = [
 //   }
 // ];
 
+
 export default function Application(props) {
 
   // const [days, setDays] = useState([]);
@@ -100,23 +101,46 @@ export default function Application(props) {
   });  
   
   const day = state.day;
+  const interviewersInday = getInterviewersForDay(state, day);
   const appointments = getAppointmentsForDay(state, day);
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview } //Appointment/index.js function save -> const interview = {student: name, interviewer}      
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };    
+
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then((data) => {
+        if (data.status === 204) {  
+          setState({ ...state, appointments});
+        }
+      }
+    );
+  }
+
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
+        day={day}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewersInday}
+        bookInterview={bookInterview}
       />
     );
   });
 
   const setDay = day => setState(prev =>({ ...prev, day }));
 
-  useEffect(() =>{
+  useEffect(() =>{ 
     const daysUrl = `http://localhost:8001/api/days`;
     const appointmentsUrl = 'http://localhost:8001/api/appointments';
     const interviewersUrl = 'http://localhost:8001/api/interviewers';
@@ -159,6 +183,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
+        <Appointment id="last" time="5pm" />
       </section>
     </main>
   );
