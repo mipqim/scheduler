@@ -16,7 +16,7 @@ export function getAppointmentsForDay(state, day) {
   return resultArray;
 }
 
-function selectObjectArray(objArray, srcProperty, filterStr) {
+export function selectObjectArray(objArray, srcProperty, filterStr) {
   return objArray.filter(obj => obj[srcProperty] === filterStr);
 }
 
