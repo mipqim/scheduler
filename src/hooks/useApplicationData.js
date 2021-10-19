@@ -46,6 +46,7 @@ export default function useApplicationData(props) {
     return tmpDays;
   }
 
+  // changeSpot - 1. Create an interver : true, 2. Edit an interview : false 
   function bookInterview(id, interview, changeSpot) {
     const appointment = {
       ...state.appointments[id],
