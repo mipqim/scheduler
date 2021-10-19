@@ -46,7 +46,7 @@ export default function useApplicationData(props) {
     return tmpDays;
   }
 
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, changeSpot) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview } //Appointment/index.js function save -> const interview = {student: name, interviewer}      
@@ -59,7 +59,7 @@ export default function useApplicationData(props) {
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((data) => {
         if (data.status === 204) {   
-          const days = makeDaysForSpots(-1);
+          const days = makeDaysForSpots(changeSpot ? -1 : 0);
           setState({ ...state, days, appointments });
         }
       })

@@ -24,15 +24,5 @@ export default function useVisualMode(initial) {
     }
   }
 
-  // function back() {  
-  //   setHistory((prev) => {
-  //     if (history.length > 1) {
-  //       prev.shift();
-  //       setMode(history[0]);
-  //     }
-  //     return prev;
-  //   });
-  // }
-
   return { mode, transition, back };
 }
