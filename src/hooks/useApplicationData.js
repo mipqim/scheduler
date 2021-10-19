@@ -13,9 +13,9 @@ export default function useApplicationData(props) {
   const setDay = day => setState(prev =>({ ...prev, day }));
 
   useEffect(() =>{ 
-    const daysUrl = `http://localhost:8001/api/days`;
-    const appointmentsUrl = 'http://localhost:8001/api/appointments';
-    const interviewersUrl = 'http://localhost:8001/api/interviewers';
+    const daysUrl = `/api/days`;
+    const appointmentsUrl = '/api/appointments';
+    const interviewersUrl = '/api/interviewers';
 
     Promise.all([
       axios.get(daysUrl),
@@ -29,23 +29,22 @@ export default function useApplicationData(props) {
     });
   },[]);
 
-  //Update spots
-  useEffect(() =>{ 
-    const currentDay = selectObjectArray(state.days, 'name', state.day)[0];
-    if (currentDay) {
-      let spots = 0;
-  
-      for (let appointmentId of currentDay.appointments){
-        if (state.appointments[appointmentId].interview === null) spots++;
-      }
-  
-      const tmpDays = state.days.map((day) => {
-        return (day.name === state.day) ? { ...day, spots: spots } :  day;
-      });
 
-      setState({ ...state, days: tmpDays});
+  //Update spots
+  const makeDaysForSpots = (changedSpot = 0) => {
+    const currentDay = selectObjectArray(state.days, 'name', state.day)[0];
+    let spots = 0;
+
+    for (let appointmentId of currentDay.appointments){
+      if (state.appointments[appointmentId].interview === null) spots++;        
     }
-  },[state.appointments]);
+    spots += changedSpot;
+
+    const tmpDays = state.days.map((day) => {
+      return (day.name === state.day) ? { ...day, spots: spots } : day;
+    });
+    return tmpDays;
+  }
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -59,8 +58,9 @@ export default function useApplicationData(props) {
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((data) => {
-        if (data.status === 204) {  
-          setState({ ...state, appointments});
+        if (data.status === 204) {   
+          const days = makeDaysForSpots(-1);
+          setState({ ...state, days, appointments });
         }
       })
   }
@@ -78,7 +78,8 @@ export default function useApplicationData(props) {
       .delete(`/api/appointments/${id}`, appointment)
       .then((response) => {
         if (response.status === 204) {
-          setState({ ...state, appointments });
+          const days = makeDaysForSpots(1);
+          setState({ ...state, days, appointments });
         }
       });
   }; 
